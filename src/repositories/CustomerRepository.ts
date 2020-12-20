@@ -1,6 +1,15 @@
 import { EntityRepository, Repository } from 'typeorm';
 
+import AppError from '../errors/AppError';
+
 import Customer from '../models/Customer';
+
+interface Request {
+  name: string;
+  cpf: string;
+  phone: string;
+  address: string;
+}
 
 @EntityRepository(Customer)
 class CustomerRepository extends Repository<Customer> {
@@ -9,13 +18,13 @@ class CustomerRepository extends Repository<Customer> {
     cpf,
     phone,
     address,
-  }: Omit<Customer, 'id' | 'created_at' | 'updated_at'>): Promise<Customer> {
+  }: Request): Promise<Customer> {
     const existCustomer = await this.findOne({
       where: { cpf },
     });
 
     if (existCustomer) {
-      return existCustomer;
+      throw new AppError('Cliente já cadastrdo com este cpf.');
     }
 
     const newCustomer = this.create({ name, cpf, phone, address });
