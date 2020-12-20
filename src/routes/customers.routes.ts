@@ -1,13 +1,15 @@
 import { Router } from 'express';
 
+import CreateCustomersService from '../services/CreateCustomersService';
+
 const customersRouter = Router();
 
-const customers = [];
+customersRouter.post('/', async (request, response) => {
+  const data = request.body;
 
-customersRouter.post('/', (request, response) => {
-  const { name, cpf, address, phone } = request.body;
+  const createCustomers = new CreateCustomersService();
 
-  const customer = { name, cpf, address, phone };
+  const customer = await createCustomers.execute(data);
 
   return response.json(customer);
 });
