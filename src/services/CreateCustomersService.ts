@@ -2,6 +2,7 @@ import { getCustomRepository } from 'typeorm';
 import CustomerRepository from '../repositories/CustomerRepository';
 
 import Customer from '../models/Customer';
+import AppError from '../errors/AppError';
 
 interface Request {
   name: string;
@@ -18,7 +19,13 @@ class CreateCustomersService {
     address,
   }: Request): Promise<Customer> {
     const customerRepository = getCustomRepository(CustomerRepository);
-    const customer = await customerRepository.verifyAndCreateCustomer({
+
+    const existCustomer = await customerRepository.findCustomerByCPF(cpf);
+
+    if (existCustomer) {
+      throw new AppError('CPF já cadastrado no sistema');
+    }
+    const customer = await customerRepository.createCustomer({
       name,
       cpf,
       address,

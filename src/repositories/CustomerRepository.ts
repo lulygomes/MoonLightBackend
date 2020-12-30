@@ -13,7 +13,7 @@ interface Request {
 
 @EntityRepository(Customer)
 class CustomerRepository extends Repository<Customer> {
-  public async verifyAndCreateCustomer({
+  public async createCustomer({
     name,
     cpf,
     phone,
@@ -31,6 +31,14 @@ class CustomerRepository extends Repository<Customer> {
     await this.save(newCustomer);
 
     return newCustomer;
+  }
+
+  public async findCustomerByCPF(cpf: string): Promise<Customer | undefined> {
+    const customer = await this.findOne({
+      where: { cpf },
+    });
+
+    return customer;
   }
 }
 
