@@ -40,6 +40,12 @@ class CustomerRepository extends Repository<Customer> {
 
     return customer;
   }
+
+  public async findAllCustomer(): Promise<Customer[] | undefined> {
+    const customer = await this.find();
+
+    return customer;
+  }
 }
 
 export default CustomerRepository;

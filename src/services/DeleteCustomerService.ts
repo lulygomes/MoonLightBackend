@@ -4,18 +4,18 @@ import CustomerRepository from '../repositories/CustomerRepository';
 import Customer from '../models/Customer';
 import AppError from '../errors/AppError';
 
-class FindCustomerByCPFService {
-  public async execute(cpf: string): Promise<Customer> {
+class ListAllCustomerByCPFService {
+  public async execute(): Promise<Customer[]> {
     const customerRepository = getCustomRepository(CustomerRepository);
 
-    const customer = await customerRepository.findCustomerByCPF(cpf);
+    const customer = await customerRepository.findAllCustomer();
 
     if (!customer) {
-      throw new AppError('CPF não cadastrado no sistema');
+      throw new AppError('Não foi encontrado nem um cliente.');
     }
 
     return customer;
   }
 }
 
-export default FindCustomerByCPFService;
+export default ListAllCustomerByCPFService;

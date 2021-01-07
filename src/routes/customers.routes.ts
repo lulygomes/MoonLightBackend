@@ -2,6 +2,7 @@ import { Router } from 'express';
 
 import CreateCustomersService from '../services/CreateCustomersService';
 import FindCustomerByCPF from '../services/FindCustomerByCpfService';
+import ListAllCustomer from '../services/ListAllCustomersService';
 
 const customersRouter = Router();
 
@@ -22,5 +23,13 @@ customersRouter.get('/:cpf', async (request, response) => {
   const customer = await findCustomerByCPF.execute(cpf);
 
   return response.json(customer);
+});
+
+customersRouter.get('/', async (request, response) => {
+  const listAllCustomer = new ListAllCustomer();
+
+  const customers = await listAllCustomer.execute();
+
+  return response.json(customers);
 });
 export default customersRouter;
