@@ -1,13 +1,13 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
-  CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('customers')
-class Customer {
+@Entity('users')
+class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -15,13 +15,10 @@ class Customer {
   name: string;
 
   @Column()
-  phone: string;
+  email: string;
 
   @Column()
-  cpf: string;
-
-  @Column()
-  address: string;
+  password: string;
 
   @CreateDateColumn()
   created_at: Date;
@@ -30,4 +27,4 @@ class Customer {
   updated_at: Date;
 }
 
-export default Customer;
+export default User;
