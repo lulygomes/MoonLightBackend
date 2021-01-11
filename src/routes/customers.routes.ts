@@ -4,7 +4,11 @@ import CreateCustomersService from '../services/CreateCustomersService';
 import FindCustomerByCPF from '../services/FindCustomerByCpfService';
 import ListAllCustomer from '../services/ListAllCustomersService';
 
+import ensureAutenticated from '../middlewares/ensureAuthenticated';
+
 const customersRouter = Router();
+
+customersRouter.use(ensureAutenticated);
 
 customersRouter.post('/', async (request, response) => {
   try {
